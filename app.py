@@ -18,6 +18,12 @@ def create_new_item():
     return index()
 
 
+@app.route('/item/<id>/checklistItem/createNew', methods=['POST'])
+def create_new_checklist_item(id):
+    session.add_checklist_item(id, request.form['item_title'])
+    return get_item(id)
+
+
 @app.route('/item/<id>/complete')
 def complete_item(id):
     session.complete_item(id)

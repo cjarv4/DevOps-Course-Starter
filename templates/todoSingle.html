@@ -23,6 +23,16 @@
         </ul>
     </div>
 </div>
+    <div class="col-md-12">
+        <h4>Add New Checklist Item</h4>
+        <form action="/item/{{ items.id }}/checklistItem/createNew" method="POST">
+            <ul>
+                <label for="name">Item Title: </label>
+                <input type="text" id="name" name="item_title">
+                <button type="submit">Create Item</button>
+            </ul>
+        </form>
+    </div>
 
 <div class="row">
     <div class="col-md-12">

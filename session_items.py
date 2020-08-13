@@ -31,6 +31,13 @@ def add_item(title):
     post_trello("https://api.trello.com/1/cards?idList=5f3169df33611522761de7cc&name=" + title)
 
 
+def add_checklist_item(id, title):
+    checklists = get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+    print(checklists[0]["id"])
+    # post_trello("https://api.trello.com/1/cards/" + checklists[0]["id"] + "/checkItem/?name=" + title)
+    post_trello("https://api.trello.com/1/checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
+
+
 def complete_item(id):
     put_trello("https://api.trello.com/1/cards/" + id + "/?idList=5f3169dff5e94e5d22ec1d0f")
 
@@ -70,7 +77,9 @@ def get_card_checklist(id):
     if todo:
         return todo[0]["checkItems"]
     else:
-        return [{"name": "Empty checklist - add a checklist item", 'state': 'Incomplete'}]
+        post_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+        todo = get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+        return todo[0]["checkItems"]
 
 
 def get_trello(url):
