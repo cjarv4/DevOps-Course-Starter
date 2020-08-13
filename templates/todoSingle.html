@@ -9,20 +9,21 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>                {{items.name}} -
-                <a href="/">Back</a></h2>
+        <h2> {{items.name}} -
+            <a href="/">Back</a></h2>
         <ul class="list-group mb-4">
-<!--            <ul>-->
-<!--                {{items.name}} - {{items.status}} - -->
-<!--                <a href="/">Back</a>-->
-<!--            <ul>-->
-                {% for item in checklist %}
-                {{item.name}} - {{item.state}}
-                <a href="/">Complete Checklist Item</a>
-                <br>
-                {% endfor %}
-            </ul>
-            </ul>
+            <!--            <ul>-->
+            <!--                {{items.name}} - {{items.status}} - -->
+            <!--                <a href="/">Back</a>-->
+            <!--            <ul>-->
+            {% for item in checklist %}
+            {{item.name}} - {{item.state}}
+            <a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/complete">Complete Checklist Item</a>
+            <a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/delete">Delete Checklist Item</a>
+            <br>
+            {% endfor %}
+        </ul>
+        </ul>
         </ul>
     </div>
 </div>
@@ -34,7 +35,7 @@
         </form>
         <br>
         <form action="/item/{{ items.id }}/delete">
-<!--            <button type="submit">Delete Item</button>-->
+            <!--            <button type="submit">Delete Item</button>-->
             <button type="submit" class="btn btn-danger">Delete Item</button>
         </form>
     </div>

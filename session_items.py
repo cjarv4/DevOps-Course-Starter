@@ -13,7 +13,7 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    cards, done = get_cards()
+    cards, doing, done = get_cards()
 
     if debug:
         print("cards - ")
@@ -22,7 +22,7 @@ def get_items():
         get_boards()
         print("lists - ")
         get_lists()
-    return cards, done
+    return cards, doing, done
 
 
 def get_item(id):
@@ -35,8 +35,8 @@ def get_item(id):
     Returns:
         item: The saved item, or None if no items match the specified ID.
     """
-    items, done = get_items()
-    items = items + done
+    items, doing, done = get_items()
+    items = items + doing + done
     return next((item for item in items if item['id'] == id), None)
 
 
@@ -86,11 +86,19 @@ def delete_item(id):
     # updated_items = existing_items
     #
     # session['items'] = updated_items
-    delete_trello("https://api.trello.com/1/cards/" + id+"?")
+    delete_trello("https://api.trello.com/1/cards/" + id + "?")
 
 
 def complete_item(id):
     put_trello("https://api.trello.com/1/cards/" + id + "/?idList=5f3169dff5e94e5d22ec1d0f")
+
+
+def complete_checklist_item(id,checklist_id):
+    put_trello("https://api.trello.com/1/cards/" + id + "/checkItem/"+checklist_id+"/?state=complete")
+
+
+def delete_checklist_item(id,checklist_id):
+    delete_trello("https://api.trello.com/1/cards/" + id + "/checkItem/"+checklist_id+"/?")
 
 
 def create_new_item(id, title, status='Not Started'):
@@ -110,10 +118,10 @@ def get_lists():
 
 def get_cards():
     todo = get_trello("https://api.trello.com/1/lists/5f3169df33611522761de7cc/cards?")
-    # doing = get_trello("https://api.trello.com/1/lists/5f3169e0916e3156fd3d1680/cards?fields=id,closed,name")
+    doing = get_trello("https://api.trello.com/1/lists/5f3169e0916e3156fd3d1680/cards?fields=id,closed,name")
     done = get_trello("https://api.trello.com/1/lists/5f3169dff5e94e5d22ec1d0f/cards?fields=id,closed,name")
 
-    return todo, done
+    return todo, doing, done
 
 
 def get_card_checklist(id):
@@ -121,11 +129,11 @@ def get_card_checklist(id):
     # doing = get_trello("https://api.trello.com/1/lists/5f3169e0916e3156fd3d1680/cards?fields=id,closed,name")
     # done = get_trellxo("https://api.trello.com/1/lists/5f3169dff5e94e5d22ec1d0f/cards?fields=id,closed,name")
     # print("printing todo")
-    # print(todo)
+    print(todo)
     if todo:
         return todo[0]["checkItems"]
     else:
-        return [{"name": "Empty checklist", 'state': 'Complete'}]
+        return [{"name": "Empty checklist - add a checklist item", 'state': 'Incomplete'}]
 
 
 def get_trello(url):
@@ -143,6 +151,8 @@ def post_trello(url):
 def put_trello(url):
     url = add_trello_token_and_key(url)
     response = requests.put(url=url)
+    print(url)
+    print(response)
     return response
 
 
