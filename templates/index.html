@@ -7,14 +7,14 @@
     <p class="lead">Just another to-do app.</p>
 </div>
 
-<div class="row">
+<div class="column">
     <div class="col-md-12">
-        <h2>Items</h2>
+        <h2>To Do</h2>
         <a href="/sorted_items">Sort by Status</a>
         <ul class="list-group mb-4">
             <ul>
-                {% for item in items %}
-                {{item.title}} - {{item.status}} -
+                {% for item in todos %}
+                {{item.name}} -
                 <a href="/item/{{ item.id }}">View Details</a>
                 <br>
                 {% endfor %}
@@ -30,6 +30,20 @@
                 <button type="submit">Create Item</button>
             </ul>
         </form>
+    </div>
+</div>
+
+<div class="column">
+    <div class="col-md-12">
+        <h2>Completed</h2>
+        <ul class="list-group mb-4">
+            <ul>
+                {% for item in dones %}
+                {{item.name}}
+                <br>
+                {% endfor %}
+            </ul>
+        </ul>
     </div>
 </div>
 

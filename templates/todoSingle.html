@@ -9,12 +9,19 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Items</h2>
+        <h2>                {{items.name}} -
+                <a href="/">Back</a></h2>
         <ul class="list-group mb-4">
-            <ul>
-                {{items.title}} - {{items.status}} -
-                <a href="/">Back</a>
-
+<!--            <ul>-->
+<!--                {{items.name}} - {{items.status}} - -->
+<!--                <a href="/">Back</a>-->
+<!--            <ul>-->
+                {% for item in checklist %}
+                {{item.name}} - {{item.state}}
+                <a href="/">Complete Checklist Item</a>
+                <br>
+                {% endfor %}
+            </ul>
             </ul>
         </ul>
     </div>
