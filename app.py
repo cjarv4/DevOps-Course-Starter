@@ -6,12 +6,13 @@ app = Flask(__name__)
 app.config.from_object('flask_config.Config')
 sortSwitch = True
 
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
         session.add_item(request.form['item_title'])
 
-    todo,done = session.get_items()
+    todo, done = session.get_items()
     global sortSwitch
     if sortSwitch:
         todo = sorted(todo, key=itemgetter('closed'))
@@ -20,17 +21,14 @@ def index():
     return render_template('index.html', todos=todo, dones=done)
 
 
-@app.route('/item/<id>', methods=['POST', 'GET'])
+@app.route('/item/<id>/complete')
+def complete_item(id):
+    session.complete_item(id)
+    return redirect("/")
+
+
+@app.route('/item/<id>')
 def get_item(id):
-    print("in the right place??")
-    if request.method == 'POST':
-        print("in the right place")
-        # item = session.get_item(id)
-        # item = session.create_new_item(item['id'], item['title'], 'Complete')
-        # session.save_item(item)
-        session.complete_item(id)
-        return redirect("/")
-    # session.get_card_checklist(id)
     return render_template('todoSingle.html', items=session.get_item(id), checklist=session.get_card_checklist(id))
 
 
