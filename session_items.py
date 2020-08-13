@@ -38,7 +38,7 @@ def add_checklist_item(id, title):
     post_trello("https://api.trello.com/1/checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
 
 
-def complete_item(id):
+def set_item_to_complete(id):
     put_trello("https://api.trello.com/1/cards/" + id + "/?idList=5f3169dff5e94e5d22ec1d0f")
 
 
@@ -52,6 +52,10 @@ def delete_item(id):
 
 def delete_checklist_item(id, checklist_id):
     delete_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?")
+
+
+def set_item_in_progress(id):
+    put_trello("https://api.trello.com/1/cards/" + id + "/?idList=5f3169e0916e3156fd3d1680")
 
 
 def get_boards():

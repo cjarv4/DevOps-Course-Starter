@@ -26,7 +26,7 @@ def create_new_checklist_item(id):
 
 @app.route('/item/<id>/complete')
 def complete_item(id):
-    session.complete_item(id)
+    session.set_item_to_complete(id)
     return redirect("/")
 
 
@@ -46,6 +46,12 @@ def delete_item(id):
 def delete_checklist_item(id, checklistId):
     session.delete_checklist_item(id, checklistId)
     return get_item(id)
+
+
+@app.route('/item/<id>/moveToDoing')
+def set_item_in_progress(id):
+    session.set_item_in_progress(id)
+    return redirect("/")
 
 
 @app.route('/item/<id>')

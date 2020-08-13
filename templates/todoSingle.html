@@ -9,30 +9,28 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2> {{items.name}} -
-            <a href="/">Back</a></h2>
+        <h2> {{items.name}} </h2>
         <ul class="list-group mb-4">
             {% for item in checklist %}
             {{item.name}} - {{item.state}}
-            <a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/complete">Complete Checklist Item</a>
-            <a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/delete">Delete Checklist Item</a>
+            <h7><a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/complete">Complete</a> /
+                <a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/delete">Delete</a>
+            </h7>
             <br>
             {% endfor %}
         </ul>
-        </ul>
-        </ul>
     </div>
 </div>
-    <div class="col-md-12">
-        <h4>Add New Checklist Item</h4>
-        <form action="/item/{{ items.id }}/checklistItem/createNew" method="POST">
-            <ul>
-                <label for="name">Item Title: </label>
-                <input type="text" id="name" name="item_title">
-                <button type="submit">Create Item</button>
-            </ul>
-        </form>
-    </div>
+<div class="col-md-12">
+    <h4>Add New Checklist Item</h4>
+    <form action="/item/{{ items.id }}/checklistItem/createNew" method="POST">
+        <ul>
+            <label for="name">Item Title: </label>
+            <input type="text" id="name" name="item_title">
+            <button type="submit">Create Item</button>
+        </ul>
+    </form>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -43,6 +41,8 @@
         <form action="/item/{{ items.id }}/delete">
             <button type="submit" class="btn btn-danger">Delete Item</button>
         </form>
+        <br>
+        <a href="/">Back</a></h2>
     </div>
 </div>
 {% endblock %}
