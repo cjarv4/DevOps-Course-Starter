@@ -27,18 +27,15 @@ def complete_item(id):
     return redirect("/")
 
 
+@app.route('/item/<id>/delete')
+def delete_item(id):
+    session.delete_item(id)
+    return redirect("/")
+
+
 @app.route('/item/<id>')
 def get_item(id):
     return render_template('todoSingle.html', items=session.get_item(id), checklist=session.get_card_checklist(id))
-
-
-@app.route('/delete_item/<id>', methods=['POST'])
-def delete_item(id):
-    if request.method == 'POST':
-        item = session.get_item(id)
-
-        session.delete_item(item)
-    return redirect("/")
 
 
 @app.route('/sorted_items')

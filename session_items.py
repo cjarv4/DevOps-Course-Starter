@@ -80,14 +80,13 @@ def save_item(item):
     return item
 
 
-def delete_item(item):
-    existing_items = get_items()
-    existing_items.remove(item)
-    updated_items = existing_items
-
-    session['items'] = updated_items
-
-    return item
+def delete_item(id):
+    # existing_items = get_items()
+    # existing_items.remove(item)
+    # updated_items = existing_items
+    #
+    # session['items'] = updated_items
+    delete_trello("https://api.trello.com/1/cards/" + id+"?")
 
 
 def complete_item(id):
@@ -144,8 +143,12 @@ def post_trello(url):
 def put_trello(url):
     url = add_trello_token_and_key(url)
     response = requests.put(url=url)
-    print(response)
-    print(url)
+    return response
+
+
+def delete_trello(url):
+    url = add_trello_token_and_key(url)
+    response = requests.delete(url=url)
     return response
 
 
