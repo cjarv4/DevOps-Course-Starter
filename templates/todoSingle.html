@@ -10,6 +10,14 @@
 <div class="row">
     <div class="col-md-12">
         <h2> {{items.name}} </h2>
+        <h7>Description: {{items.desc}}</h7>
+        <br>
+        <h7>Due Date: {{items.due}}</h7>
+        <br>
+        <a href="/">Edit Card</a></h2>
+        <br>
+        <br>
+        <h7><b>Checklist: </b></h7>
         <ul class="list-group mb-4">
             {% for item in checklist %}
             {{item.name}} - {{item.state}}
@@ -21,15 +29,16 @@
         </ul>
     </div>
 </div>
-<div class="col-md-12">
-    <h4>Add New Checklist Item</h4>
-    <form action="/item/{{ items.id }}/checklistItem/createNew" method="POST">
-        <ul>
+<div class="row">
+    <div class="col-md-12">
+        <h7><b>Add New Checklist Item</b></h7>
+        <form action="/item/{{ items.id }}/checklistItem/createNew" method="POST">
             <label for="name">Item Title: </label>
             <input type="text" id="name" name="item_title">
             <button type="submit">Create Item</button>
-        </ul>
-    </form>
+        </form>
+        <br>
+    </div>
 </div>
 
 <div class="row">

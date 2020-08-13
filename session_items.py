@@ -27,8 +27,9 @@ def get_item(id):
     return next((item for item in items if item['id'] == id), None)
 
 
-def add_item(title):
-    post_trello("https://api.trello.com/1/cards?idList=5f3169df33611522761de7cc&name=" + title)
+def add_item(title, desc, dueDate):
+    post_trello(
+        "https://api.trello.com/1/cards?idList=5f3169df33611522761de7cc&name=" + title + "&desc=" + desc + "&due=" + dueDate)
 
 
 def add_checklist_item(id, title):
