@@ -1,9 +1,9 @@
 from flask import session
+import os
+import requests
 
-_DEFAULT_ITEMS = [
-    {'id': 1, 'status': 'Not Started', 'title': 'List saved todo items'},
-    {'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added'}
-]
+# debug = True
+debug = False
 
 
 def get_items():
@@ -13,7 +13,16 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return session.get('items', _DEFAULT_ITEMS)
+    cards, done = get_cards()
+
+    if debug:
+        print("cards - ")
+        print(cards)
+        print("boards - ")
+        get_boards()
+        print("lists - ")
+        get_lists()
+    return cards, done
 
 
 def get_item(id):
@@ -26,8 +35,9 @@ def get_item(id):
     Returns:
         item: The saved item, or None if no items match the specified ID.
     """
-    items = get_items()
-    return next((item for item in items if item['id'] == int(id)), None)
+    items, done = get_items()
+    items = items + done
+    return next((item for item in items if item['id'] == id), None)
 
 
 def add_item(title):
@@ -40,17 +50,20 @@ def add_item(title):
     Returns:
         item: The saved item.
     """
-    items = get_items()
+    # items = get_items()
 
     # Determine the ID for the item based on that of the previously added item
-    item = create_new_item(items[-1]['id'] + 1 if items else 0, title)
+    # item = create_new_item(items[-1]['id'] + 1 if items else 0, title)
 
+    post_trello("https://api.trello.com/1/cards?idList=5f3169df33611522761de7cc&name=" + title)
     # Add the item to the list
-    items.append(item)
-    session['items'] = items
+    # items.append(item)
+    # session['items'] = items
 
-    return item
+    # return item
 
+
+# https://api.trello.com/1/lists/5f3169df33611522761de7cc/cards?token=0ee7c15267a7a7fee3f90ebed124aa5e14652888ce7fc40b444ab7b9ebcbd019&key=d3cfc4a193b13c194d0ca2484808d1f2
 
 def save_item(item):
     """
@@ -77,6 +90,65 @@ def delete_item(item):
     return item
 
 
+def complete_item(id):
+    put_trello("https://api.trello.com/1/cards/" + id + "/?idList=5f3169dff5e94e5d22ec1d0f")
+
+
 def create_new_item(id, title, status='Not Started'):
     item = {'id': id, 'title': title, 'status': status}
     return item
+
+
+def get_boards():
+    response = get_trello("https://api.trello.com/1/members/me/boards?")
+    print(response)
+
+
+def get_lists():
+    response = get_trello("https://api.trello.com/1/boards/5f3169dff2ad7b72d45fc4c3/lists?")
+    print(response)
+
+
+def get_cards():
+    todo = get_trello("https://api.trello.com/1/lists/5f3169df33611522761de7cc/cards?")
+    # doing = get_trello("https://api.trello.com/1/lists/5f3169e0916e3156fd3d1680/cards?fields=id,closed,name")
+    done = get_trello("https://api.trello.com/1/lists/5f3169dff5e94e5d22ec1d0f/cards?fields=id,closed,name")
+
+    return todo, done
+
+
+def get_card_checklist(id):
+    todo = get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+    # doing = get_trello("https://api.trello.com/1/lists/5f3169e0916e3156fd3d1680/cards?fields=id,closed,name")
+    # done = get_trellxo("https://api.trello.com/1/lists/5f3169dff5e94e5d22ec1d0f/cards?fields=id,closed,name")
+    # print("printing todo")
+    # print(todo)
+    if todo:
+        return todo[0]["checkItems"]
+    else:
+        return [{"name": "Empty checklist", 'state': 'Complete'}]
+
+
+def get_trello(url):
+    url = add_trello_token_and_key(url)
+    response = requests.get(url=url).json()
+    return response
+
+
+def post_trello(url):
+    url = add_trello_token_and_key(url)
+    response = requests.post(url=url)
+    return response
+
+
+def put_trello(url):
+    url = add_trello_token_and_key(url)
+    response = requests.put(url=url)
+    print(response)
+    print(url)
+    return response
+
+
+def add_trello_token_and_key(url):
+    return url + "&token=" + os.getenv(
+        'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
