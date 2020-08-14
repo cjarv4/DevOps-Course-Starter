@@ -21,8 +21,8 @@
         <ul class="list-group mb-4">
             {% for item in checklist %}
             {{item.name}} - {{item.state}}
-            <h7><a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/complete">Complete</a> /
-                <a href="/item/{{ items.id }}/checklistItem/{{ item.id }}/delete">Delete</a>
+            <h7><a href="/card/{{ items.id }}/checklistItem/{{ item.id }}/complete">Complete</a> /
+                <a href="/card/{{ items.id }}/checklistItem/{{ item.id }}/delete">Delete</a>
             </h7>
             <br>
             {% endfor %}
@@ -32,7 +32,7 @@
 <div class="row">
     <div class="col-md-12">
         <h7><b>Add New Checklist Item</b></h7>
-        <form action="/item/{{ items.id }}/checklistItem/createNew" method="POST">
+        <form action="/card/{{ items.id }}/checklistItem/createNew" method="POST">
             <label for="name">Item Title: </label>
             <input type="text" id="name" name="item_title">
             <button type="submit">Create Item</button>
@@ -43,11 +43,11 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form action="/item/{{ items.id }}/complete">
+        <form action="/card/{{ items.id }}/complete">
             <button type="submit" class="btn btn-success">Complete Item</button>
         </form>
         <br>
-        <form action="/item/{{ items.id }}/delete">
+        <form action="/card/{{ items.id }}/delete">
             <button type="submit" class="btn btn-danger">Delete Item</button>
         </form>
         <br>

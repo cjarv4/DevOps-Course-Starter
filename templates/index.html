@@ -14,15 +14,15 @@
         <ul class="list-group mb-4">
             {% for item in todos %}
             {{item.name}}
-            <a href="/item/{{ item.id }}">View Details</a>
-            <a href="/item/{{ item.id }}/moveToDoing">Set in Progress</a>
+            <a href="/card/{{ item.id }}">View Details</a>
+            <a href="/card/{{ item.id }}/moveToDoing">Set in Progress</a>
             <br>
             {% endfor %}
         </ul>
     </div>
     <div class="col-md-12">
         <h2>Add New Item</h2>
-        <form action="/item/createNew" method="POST">
+        <form action="/card/createNew" method="POST">
                 <label for="name">Item Title: </label>
                 <input type="text" id="name" name="item_title">
                 <label for="desc">Description: </label>
@@ -40,7 +40,7 @@
         <ul class="list-group mb-4">
             {% for item in doings %}
             {{item.name}}
-            <a href="/item/{{ item.id }}">View Details</a>
+            <a href="/card/{{ item.id }}">View Details</a>
             <br>
             {% endfor %}
         </ul>
@@ -53,8 +53,8 @@
         <ul class="list-group mb-4">
             {% for item in dones %}
             {{item.name}}
-            <a href="/item/{{ item.id }}">View Details</a>
-            <a href="/item/{{ item.id }}/moveToDoing">Make Incomplete</a>
+            <a href="/card/{{ item.id }}">View Details</a>
+            <a href="/card/{{ item.id }}/moveToDoing">Make Incomplete</a>
             <br>
             {% endfor %}
         </ul>

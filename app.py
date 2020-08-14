@@ -3,60 +3,59 @@ import session_items as session
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
-sortSwitch = True
 
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    todo, doing, done = session.get_items()
+    todo, doing, done = session.get_cards()
     return render_template('index.html', todos=todo, doings=doing, dones=done)
 
 
-@app.route('/item/createNew', methods=['POST'])
-def create_new_item():
-    session.add_item(request.form['item_title'], request.form['desc'], request.form['date'])
+@app.route('/card/createNew', methods=['POST'])
+def create_new_card():
+    session.add_card(request.form['item_title'], request.form['desc'], request.form['date'])
     return index()
 
 
-@app.route('/item/<id>/checklistItem/createNew', methods=['POST'])
+@app.route('/card/<id>/checklistItem/createNew', methods=['POST'])
 def create_new_checklist_item(id):
     session.add_checklist_item(id, request.form['item_title'])
-    return get_item(id)
+    return get_card(id)
 
 
-@app.route('/item/<id>/complete')
-def complete_item(id):
-    session.set_item_to_complete(id)
+@app.route('/card/<id>/complete')
+def complete_card(id):
+    session.set_card_to_complete(id)
     return redirect("/")
 
 
-@app.route('/item/<id>/checklistItem/<checklistId>/complete')
+@app.route('/card/<id>/checklistItem/<checklistId>/complete')
 def complete_checklist_item(id, checklistId):
     session.complete_checklist_item(id, checklistId)
-    return get_item(id)
+    return get_card(id)
 
 
-@app.route('/item/<id>/delete')
-def delete_item(id):
-    session.delete_item(id)
+@app.route('/card/<id>/delete')
+def delete_card(id):
+    session.delete_card(id)
     return redirect("/")
 
 
-@app.route('/item/<id>/checklistItem/<checklistId>/delete')
+@app.route('/card/<id>/checklistItem/<checklistId>/delete')
 def delete_checklist_item(id, checklistId):
     session.delete_checklist_item(id, checklistId)
-    return get_item(id)
+    return get_card(id)
 
 
-@app.route('/item/<id>/moveToDoing')
-def set_item_in_progress(id):
+@app.route('/card/<id>/moveToDoing')
+def set_card_in_progress(id):
     session.set_item_in_progress(id)
     return redirect("/")
 
 
-@app.route('/item/<id>')
-def get_item(id):
-    return render_template('todoSingle.html', items=session.get_item(id), checklist=session.get_card_checklist(id))
+@app.route('/card/<id>')
+def get_card(id):
+    return render_template('todoSingle.html', items=session.get_card(id), checklist=session.get_card_checklist(id))
 
 
 if __name__ == '__main__':
