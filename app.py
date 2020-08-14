@@ -49,7 +49,7 @@ def delete_checklist_item(id, checklistId):
 
 @app.route('/card/<id>/moveToDoing')
 def set_card_in_progress(id):
-    session.set_item_in_progress(id)
+    session.set_card_in_progress(id)
     return redirect("/")
 
 
