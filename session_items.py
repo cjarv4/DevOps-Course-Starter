@@ -29,9 +29,12 @@ def get_cards():
 
 
 def get_card(id):
-    items, doing, done = get_cards()
-    items = items + doing + done
-    return next((item for item in items if item['id'] == id), None)
+    todo, doing, done = get_cards()
+    cards = todo + doing + done
+    card = next((card for card in cards if card['id'] == id), None)
+    if card["due"]:
+        card["due"] = card["due"][0:10] #ignore timestamp
+    return card
 
 
 def add_card(title, desc, dueDate):
