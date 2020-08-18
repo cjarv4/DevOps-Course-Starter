@@ -45,7 +45,6 @@ def add_card(title, desc, dueDate):
 
 def add_checklist_item(id, title):
     checklists = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
-    print(checklists[0]["id"])
     trello.post_trello("https://api.trello.com/1/checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
 
 

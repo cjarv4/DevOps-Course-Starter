@@ -4,15 +4,15 @@
 {% block content %}
 <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
-        <div class="myclass">
+    <div class="myclass">
         <form action="/card/createNew" method="POST">
-                <label for="name">Item Title: </label>
-                <input type="text" id="name" name="item_title">
-                <label for="desc">Description: </label>
-                <input type="text" id="desc" name="desc">
-                <label for="name">Due Date: </label>
-                <input type="date" id="date" name="date">
-                <button type="submit">Create Item</button>
+            <label for="name">Item Title: </label>
+            <input type="text" id="name" name="item_title">
+            <label for="desc">Description: </label>
+            <input type="text" id="desc" name="desc">
+            <label for="name">Due Date: </label>
+            <input type="date" id="date" name="date">
+            <button type="submit">Create Item</button>
         </form>
     </div>
 </div>
@@ -39,6 +39,7 @@
             {% for item in doings %}
             {{item.name}}
             <a href="/card/{{ item.id }}">View Details</a>
+            <a href="/card/{{ item.id }}/complete">Complete Item</a>
             <br>
             {% endfor %}
         </ul>
