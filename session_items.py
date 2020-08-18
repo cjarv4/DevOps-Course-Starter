@@ -1,6 +1,7 @@
 from flask import session
 import os
 import requests
+import trello as trello
 
 # debug = True
 debug = False
@@ -11,9 +12,9 @@ trelloBoard = "5f3169dff2ad7b72d45fc4c3"
 
 
 def get_cards():
-    todo = get_trello("https://api.trello.com/1/lists/" + todoList + "/cards?")
-    doing = get_trello("https://api.trello.com/1/lists/" + doingList + "/cards?")
-    done = get_trello("https://api.trello.com/1/lists/" + doneList + "/cards?")
+    todo = trello.get_trello("https://api.trello.com/1/lists/" + todoList + "/cards?")
+    doing = trello.get_trello("https://api.trello.com/1/lists/" + doingList + "/cards?")
+    done = trello.get_trello("https://api.trello.com/1/lists/" + doneList + "/cards?")
 
     if debug:
         print("cards - ")
@@ -21,9 +22,9 @@ def get_cards():
         print(doing)
         print(done)
         print("boards - ")
-        print(get_trello("https://api.trello.com/1/members/me/boards?"))
+        print(trello.get_trello("https://api.trello.com/1/members/me/boards?"))
         print("lists - ")
-        print(get_trello("https://api.trello.com/1/boards/" + trelloBoard + "/lists?"))
+        print(trello.get_trello("https://api.trello.com/1/boards/" + trelloBoard + "/lists?"))
 
     return todo, doing, done
 
@@ -38,70 +39,42 @@ def get_card(id):
 
 
 def add_card(title, desc, dueDate):
-    post_trello(
+    trello.post_trello(
         "https://api.trello.com/1/cards?idList=" + todoList + "&name=" + title + "&desc=" + desc + "&due=" + dueDate)
 
 
 def add_checklist_item(id, title):
-    checklists = get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+    checklists = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
     print(checklists[0]["id"])
-    post_trello("https://api.trello.com/1/checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
+    trello.post_trello("https://api.trello.com/1/checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
 
 
 def set_card_to_complete(id):
-    put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doneList)
+    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doneList)
 
 
 def complete_checklist_item(id, checklist_id):
-    put_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?state=complete")
+    trello.put_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?state=complete")
 
 
 def delete_card(id):
-    delete_trello("https://api.trello.com/1/cards/" + id + "?")
+    trello.delete_trello("https://api.trello.com/1/cards/" + id + "?")
 
 
 def delete_checklist_item(id, checklist_id):
-    delete_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?")
+    trello.delete_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?")
 
 
 def set_card_in_progress(id):
-    put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doingList)
+    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doingList)
 
 
 def get_card_checklist(id):
-    todo = get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+    todo = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
     if todo:
         return todo[0]["checkItems"]
     else:
-        post_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
-        todo = get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+        trello.post_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+        todo = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
         return todo[0]["checkItems"]
 
-
-def get_trello(url):
-    url = add_trello_token_and_key(url)
-    response = requests.get(url=url).json()
-    return response
-
-
-def post_trello(url):
-    url = add_trello_token_and_key(url)
-    response = requests.post(url=url)
-    return response
-
-
-def put_trello(url):
-    url = add_trello_token_and_key(url)
-    response = requests.put(url=url)
-    return response
-
-
-def delete_trello(url):
-    url = add_trello_token_and_key(url)
-    response = requests.delete(url=url)
-    return response
-
-
-def add_trello_token_and_key(url):
-    return url + "&token=" + os.getenv(
-        'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
