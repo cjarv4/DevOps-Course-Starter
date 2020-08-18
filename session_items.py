@@ -34,7 +34,7 @@ def get_card(id):
     cards = todo + doing + done
     card = next((card for card in cards if card['id'] == id), None)
     if card["due"]:
-        card["due"] = card["due"][0:10] #ignore timestamp
+        card["due"] = card["due"][0:10]  # ignore timestamp
     return card
 
 
@@ -77,4 +77,3 @@ def get_card_checklist(id):
         trello.post_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
         todo = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
         return todo[0]["checkItems"]
-
