@@ -14,9 +14,9 @@ class Item:
 
 
 def get_cards():
-    todo = trello.get_trello("https://api.trello.com/1/lists/" + toDoListId + "/cards?")
-    doing = trello.get_trello("https://api.trello.com/1/lists/" + doingListId + "/cards?")
-    done = trello.get_trello("https://api.trello.com/1/lists/" + doneListId + "/cards?")
+    todo = trello.get_trello("lists/" + toDoListId + "/cards?")
+    doing = trello.get_trello("lists/" + doingListId + "/cards?")
+    done = trello.get_trello("lists/" + doneListId + "/cards?")
 
     return convertToArrayOfItems(todo), convertToArrayOfItems(doing), convertToArrayOfItems(done)
 
@@ -41,39 +41,39 @@ def get_card(id):
 
 def add_card(title, desc, dueDate):
     trello.post_trello(
-        "https://api.trello.com/1/cards?idList=" + toDoListId + "&name=" + title + "&desc=" + desc + "&due=" + dueDate)
+        "cards?idList=" + toDoListId + "&name=" + title + "&desc=" + desc + "&due=" + dueDate)
 
 
 def add_checklist_item(id, title):
-    checklists = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
-    trello.post_trello("https://api.trello.com/1/checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
+    checklists = trello.get_trello("cards/" + id + "/checklists?")
+    trello.post_trello("checklists/" + checklists[0]["id"] + "/checkItems/?name=" + title)
 
 
 def set_card_to_complete(id):
-    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doneListId)
+    trello.put_trello("cards/" + id + "/?idList=" + doneListId)
 
 
 def complete_checklist_item(id, checklist_id):
-    trello.put_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?state=complete")
+    trello.put_trello("cards/" + id + "/checkItem/" + checklist_id + "/?state=complete")
 
 
 def delete_card(id):
-    trello.delete_trello("https://api.trello.com/1/cards/" + id + "?")
+    trello.delete_trello("cards/" + id + "?")
 
 
 def delete_checklist_item(id, checklist_id):
-    trello.delete_trello("https://api.trello.com/1/cards/" + id + "/checkItem/" + checklist_id + "/?")
+    trello.delete_trello("cards/" + id + "/checkItem/" + checklist_id + "/?")
 
 
 def set_card_in_progress(id):
-    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doingListId)
+    trello.put_trello("cards/" + id + "/?idList=" + doingListId)
 
 
 def get_card_checklist(id):
-    todo = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+    todo = trello.get_trello("cards/" + id + "/checklists?")
     if todo:
         return todo[0]["checkItems"]
     else:
-        trello.post_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
-        todo = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
+        trello.post_trello("cards/" + id + "/checklists?")
+        todo = trello.get_trello("cards/" + id + "/checklists?")
         return todo[0]["checkItems"]
