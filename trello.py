@@ -1,6 +1,11 @@
 import os
 import requests
 
+todoList = "5f3169df33611522761de7cc"
+doingList = "5f3169e0916e3156fd3d1680"
+doneList = "5f3169dff5e94e5d22ec1d0f"
+trelloBoard = "5f3169dff2ad7b72d45fc4c3"
+
 
 def get_trello(url):
     url = add_trello_token_and_key(url)
