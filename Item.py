@@ -6,7 +6,6 @@ doneListId = trello.get_trello_list_id("Done")
 
 
 class Item:
-
     def __init__(self, id, name, desc, due):
         self.id = id
         self.name = name
@@ -14,24 +13,10 @@ class Item:
         self.due = due
 
 
-# debug = True
-debug = False
-
-
 def get_cards():
     todo = trello.get_trello("https://api.trello.com/1/lists/" + toDoListId + "/cards?")
     doing = trello.get_trello("https://api.trello.com/1/lists/" + doingListId + "/cards?")
     done = trello.get_trello("https://api.trello.com/1/lists/" + doneListId + "/cards?")
-
-    if debug:
-        print("cards - ")
-        print(todo)
-        print(doing)
-        print(done)
-        print("boards - ")
-        print(trello.get_trello("https://api.trello.com/1/members/me/boards?"))
-        print("lists - ")
-        print(trello.get_trello("https://api.trello.com/1/boards/" + trello.trelloBoard + "/lists?"))
 
     return convertToArrayOfItems(todo), convertToArrayOfItems(doing), convertToArrayOfItems(done)
 
