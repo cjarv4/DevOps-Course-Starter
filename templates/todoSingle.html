@@ -2,20 +2,6 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
-        <div class="myclass">
-        <form action="/card/createNew" method="POST">
-                <label for="name">Item Title: </label>
-                <input type="text" id="name" name="item_title">
-                <label for="desc">Description: </label>
-                <input type="text" id="desc" name="desc">
-                <label for="name">Due Date: </label>
-                <input type="date" id="date" name="date">
-                <button type="submit">Create Item</button>
-        </form>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-md-12">
