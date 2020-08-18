@@ -33,7 +33,6 @@ def add_trello_token_and_key(url):
 
 def get_trello_board_id():
     board = get_trello("https://api.trello.com/1/members/me/boards?")
-    print("Got ID for Board")
     return board[0]["id"]
 
 boardId = get_trello_board_id()
@@ -41,7 +40,6 @@ boardId = get_trello_board_id()
 def get_trello_list_id(name):
     lists = get_trello("https://api.trello.com/1/boards/" + boardId + "/lists?")
     list = next((list for list in lists if list["name"] == name), None)
-    print("Got ID for " + name)
     return list["id"]
 
 
