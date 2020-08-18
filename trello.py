@@ -4,9 +4,9 @@ import requests
 host = "https://api.trello.com/1/"
 
 
-def add_trello_host_token_and_key(url):
-    return host + url + "&token=" + os.getenv(
-        'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
+def get_trello_board_id():
+    board = get_trello("members/me/boards?")
+    return board[0]["id"]
 
 
 def get_trello(url):
@@ -15,9 +15,9 @@ def get_trello(url):
     return response
 
 
-def get_trello_board_id():
-    board = get_trello("members/me/boards?")
-    return board[0]["id"]
+def add_trello_host_token_and_key(url):
+    return host + url + "&token=" + os.getenv(
+        'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
 
 
 boardId = get_trello_board_id()
