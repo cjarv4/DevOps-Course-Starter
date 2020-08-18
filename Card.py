@@ -5,7 +5,7 @@ doingListId = trello.get_trello_list_id("Doing")
 doneListId = trello.get_trello_list_id("Done")
 
 
-class Item:
+class Card:
     def __init__(self, id, name, desc, due):
         self.id = id
         self.name = name
@@ -18,15 +18,19 @@ def get_cards():
     doing = trello.get_trello("lists/" + doingListId + "/cards?")
     done = trello.get_trello("lists/" + doneListId + "/cards?")
 
-    return convertToArrayOfItems(todo), convertToArrayOfItems(doing), convertToArrayOfItems(done)
+    return convertToArrayOfCards(todo), convertToArrayOfCards(doing), convertToArrayOfCards(done)
 
 
-def convertToArrayOfItems(items):
+def convertToArrayOfCards(items):
     returnList = []
     for item in items:
-        newItem = Item(item["id"], item["name"], item["desc"], item["due"])
+        newItem = convertToCard(item)
         returnList.append(newItem)
     return returnList
+
+
+def convertToCard(item):
+    return Card(item["id"], item["name"], item["desc"], item["due"])
 
 
 def get_card(id):
