@@ -2,6 +2,7 @@ from flask import session
 import os
 import requests
 import trello as trello
+import Item
 
 # debug = True
 debug = False
@@ -26,15 +27,16 @@ def get_cards():
         print("lists - ")
         print(trello.get_trello("https://api.trello.com/1/boards/" + trelloBoard + "/lists?"))
 
-    return todo, doing, done
+    return convert_class(todo), convert_class(doing), convert_class(done)
 
 
 def get_card(id):
     todo, doing, done = get_cards()
     cards = todo + doing + done
-    card = next((card for card in cards if card['id'] == id), None)
-    if card["due"]:
-        card["due"] = card["due"][0:10]  # ignore timestamp
+    card = next((card for card in cards if card.id == id), None)
+
+    if card.due:
+        card.due = card.due[0:10]  # ignore timestamp
     return card
 
 
@@ -76,3 +78,11 @@ def get_card_checklist(id):
         trello.post_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
         todo = trello.get_trello("https://api.trello.com/1/cards/" + id + "/checklists?")
         return todo[0]["checkItems"]
+
+
+def convert_class(items):
+    returnList = []
+    for item in items:
+        newItem = Item.Item(item["id"], item["name"], item["desc"], item["due"])
+        returnList.append(newItem)
+    return returnList
