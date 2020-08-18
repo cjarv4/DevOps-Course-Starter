@@ -1,9 +1,11 @@
 import os
 import requests
 
+host = "https://api.trello.com/1/"
+
 
 def add_trello_host_token_and_key(url):
-    return "https://api.trello.com/1/" + url + "&token=" + os.getenv(
+    return host + url + "&token=" + os.getenv(
         'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
 
 
