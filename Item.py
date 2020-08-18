@@ -1,5 +1,9 @@
 import trello as trello
 
+toDoListId = trello.get_trello_list_id("To Do")
+doingListId = trello.get_trello_list_id("Doing")
+doneListId = trello.get_trello_list_id("Done")
+
 
 class Item:
 
@@ -13,10 +17,11 @@ class Item:
 # debug = True
 debug = False
 
+
 def get_cards():
-    todo = trello.get_trello("https://api.trello.com/1/lists/" + trello.todoList + "/cards?")
-    doing = trello.get_trello("https://api.trello.com/1/lists/" + trello.doingList + "/cards?")
-    done = trello.get_trello("https://api.trello.com/1/lists/" + trello.doneList + "/cards?")
+    todo = trello.get_trello("https://api.trello.com/1/lists/" + toDoListId + "/cards?")
+    doing = trello.get_trello("https://api.trello.com/1/lists/" + doingListId + "/cards?")
+    done = trello.get_trello("https://api.trello.com/1/lists/" + doneListId + "/cards?")
 
     if debug:
         print("cards - ")
@@ -51,7 +56,7 @@ def get_card(id):
 
 def add_card(title, desc, dueDate):
     trello.post_trello(
-        "https://api.trello.com/1/cards?idList=" + trello.todoList + "&name=" + title + "&desc=" + desc + "&due=" + dueDate)
+        "https://api.trello.com/1/cards?idList=" + toDoListId + "&name=" + title + "&desc=" + desc + "&due=" + dueDate)
 
 
 def add_checklist_item(id, title):
@@ -60,7 +65,7 @@ def add_checklist_item(id, title):
 
 
 def set_card_to_complete(id):
-    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + trello.doneList)
+    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doneListId)
 
 
 def complete_checklist_item(id, checklist_id):
@@ -76,7 +81,7 @@ def delete_checklist_item(id, checklist_id):
 
 
 def set_card_in_progress(id):
-    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + trello.doingList)
+    trello.put_trello("https://api.trello.com/1/cards/" + id + "/?idList=" + doingListId)
 
 
 def get_card_checklist(id):

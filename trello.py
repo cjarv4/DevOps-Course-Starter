@@ -1,11 +1,6 @@
 import os
 import requests
 
-todoList = "5f3169df33611522761de7cc"
-doingList = "5f3169e0916e3156fd3d1680"
-doneList = "5f3169dff5e94e5d22ec1d0f"
-trelloBoard = "5f3169dff2ad7b72d45fc4c3"
-
 
 def get_trello(url):
     url = add_trello_token_and_key(url)
@@ -34,3 +29,19 @@ def delete_trello(url):
 def add_trello_token_and_key(url):
     return url + "&token=" + os.getenv(
         'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
+
+
+def get_trello_board_id():
+    board = get_trello("https://api.trello.com/1/members/me/boards?")
+    print("Got ID for Board")
+    return board[0]["id"]
+
+boardId = get_trello_board_id()
+
+def get_trello_list_id(name):
+    lists = get_trello("https://api.trello.com/1/boards/" + boardId + "/lists?")
+    list = next((list for list in lists if list["name"] == name), None)
+    print("Got ID for " + name)
+    return list["id"]
+
+
