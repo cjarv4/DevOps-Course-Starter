@@ -2,10 +2,23 @@ import os
 import requests
 
 
+def add_trello_host_token_and_key(url):
+    return "https://api.trello.com/1/" + url + "&token=" + os.getenv(
+        'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
+
+
 def get_trello(url):
     url = add_trello_host_token_and_key(url)
     response = requests.get(url=url).json()
     return response
+
+
+def get_trello_board_id():
+    board = get_trello("members/me/boards?")
+    return board[0]["id"]
+
+
+boardId = get_trello_board_id()
 
 
 def post_trello(url):
@@ -24,19 +37,6 @@ def delete_trello(url):
     url = add_trello_host_token_and_key(url)
     response = requests.delete(url=url)
     return response
-
-
-def add_trello_host_token_and_key(url):
-    return "https://api.trello.com/1/" + url + "&token=" + os.getenv(
-        'TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
-
-
-def get_trello_board_id():
-    board = get_trello("members/me/boards?")
-    return board[0]["id"]
-
-
-boardId = get_trello_board_id()
 
 
 def get_trello_list_id(name):
