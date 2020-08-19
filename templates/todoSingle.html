@@ -30,7 +30,7 @@
         <h7><b>Add New Checklist Item</b></h7>
         <form action="/card/{{ items.id }}/checklistItem/createNew" method="POST">
             <label for="name">Item Title: </label>
-            <input type="text" id="name" name="item_title">
+            <input type="text" id="name" name="item_title" required>
             <button type="submit">Create Item</button>
         </form>
         <br>

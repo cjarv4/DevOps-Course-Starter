@@ -44,11 +44,11 @@
     <div class="myclass">
         <form action="/card/createNew" method="POST">
             <label for="name">Item Title: </label>
-            <input type="text" id="name" name="item_title">
+            <input type="text" id="name" name="item_title" required>
             <label for="desc">Description: </label>
-            <input type="text" id="desc" name="desc">
+            <input type="text" id="desc" name="desc" required>
             <label for="name">Due Date: </label>
-            <input type="date" id="date" name="date">
+            <input type="date" id="date" name="date" required>
             <button type="submit">Create Item</button>
         </form>
     </div>
