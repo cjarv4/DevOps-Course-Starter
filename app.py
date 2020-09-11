@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import Card as card
+import pytest
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
@@ -28,7 +29,7 @@ class ViewModel:
 def index():
     todo, doing, done = card.get_cards()
     item_view_model = ViewModel(todo, doing, done)
-    return render_template('index.html', view_model = item_view_model)
+    return render_template('index.html', view_model=item_view_model)
     # return render_template('index.html', todos=todo, doings=doing, dones=done)
 
 
