@@ -5,10 +5,31 @@ app = Flask(__name__)
 app.config.from_object('flask_config.Config')
 
 
+class ViewModel:
+    def __init__(self, todo, doing, done):
+        self._todo = todo
+        self._doing = doing
+        self._done = done
+
+    @property
+    def todo(self):
+        return self._todo
+
+    @property
+    def doing(self):
+        return self._doing
+
+    @property
+    def done(self):
+        return self._done
+
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     todo, doing, done = card.get_cards()
-    return render_template('index.html', todos=todo, doings=doing, dones=done)
+    item_view_model = ViewModel(todo, doing, done)
+    return render_template('index.html', view_model = item_view_model)
+    # return render_template('index.html', todos=todo, doings=doing, dones=done)
 
 
 @app.route('/card/createNew', methods=['POST'])
