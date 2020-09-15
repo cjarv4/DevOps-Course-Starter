@@ -1,5 +1,6 @@
 import os
 import requests
+from dotenv import load_dotenv
 
 
 def get_trello_board_id():
@@ -9,13 +10,15 @@ def get_trello_board_id():
 
 def get_trello(url):
     url = add_trello_host_token_and_key(url)
-    response = requests.get(url).json()
-    return response
+    response = requests.get(url)
+    response_json = response.json()
+    return response_json
 
 
 def add_trello_host_token_and_key(url):
     host = "https://api.trello.com/1/"
-    return str(host) + str(url) + "&token=" + str(os.getenv('TRELLO_TOKEN')) + "&key=" + str(os.getenv('TRELLO_KEY'))
+    load_dotenv()
+    return str(host) + str(url) + "&token=" + os.getenv('TRELLO_TOKEN') + "&key=" + os.getenv('TRELLO_KEY')
 
 
 def post_trello(url):
