@@ -6,11 +6,12 @@ doneListId = trello.get_trello_list_id("Done")
 
 
 class Card:
-    def __init__(self, id, name, desc, due):
+    def __init__(self, id, name, desc, due, last_activity):
         self.id = id
         self.name = name
         self.desc = desc
         self.due = due
+        self.last_activity = last_activity
 
 
 def get_cards():
@@ -19,6 +20,11 @@ def get_cards():
     done = trello.get_trello("lists/" + doneListId + "/cards?")
 
     return convertToArrayOfCards(todo), convertToArrayOfCards(doing), convertToArrayOfCards(done)
+
+
+def get_all_cards():
+    todo, doing, done = get_cards()
+    return todo + doing + done
 
 
 def convertToArrayOfCards(items):
@@ -30,14 +36,20 @@ def convertToArrayOfCards(items):
 
 
 def convertToCard(item):
-    return Card(item["id"], item["name"], item["desc"], item["due"])
+    return Card(item["id"], item["name"], item["desc"], item["due"], item["dateLastActivity"])
 
 
-def get_card(id):
-    todo, doing, done = get_cards()
-    cards = todo + doing + done
-    card = next((card for card in cards if card.id == id), None)
+def get_card_by_id(id):
+    card = next((card for card in get_all_cards() if card.id == id), None)
+    return trim_timestamp(card)
 
+
+def get_card_by_name(name):
+    card = next((card for card in get_all_cards() if card.name == name), None)
+    return trim_timestamp(card)
+
+
+def trim_timestamp(card):
     if card.due:
         card.due = card.due[0:10]  # ignore timestamp
     return card
