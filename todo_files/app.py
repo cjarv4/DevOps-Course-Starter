@@ -59,7 +59,7 @@ def set_card_in_progress(id):
 
 @app.route('/card/<id>')
 def get_card(id):
-    return render_template('todoSingle.html', items=card.get_card(id), checklist=card.get_card_checklist(id))
+    return render_template('todoSingle.html', items=card.get_card_by_id(id), checklist=card.get_card_checklist(id))
 
 
 if __name__ == '__main__':
