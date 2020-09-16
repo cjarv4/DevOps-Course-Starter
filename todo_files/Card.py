@@ -1,4 +1,6 @@
 import trello as trello
+from datetime import datetime
+
 
 toDoListId = trello.get_trello_list_id("To Do")
 doingListId = trello.get_trello_list_id("Doing")
@@ -100,6 +102,6 @@ def get_card_checklist(id):
 def get_complete_items_from_today(cards):
     returnList = []
     for card in cards:
-        if card.last_activity[0:10] == "2020-08-18":
+        if card.last_activity[0:10] == datetime.today().strftime('%Y-%m-%d'):
             returnList.append(card)
     return returnList
