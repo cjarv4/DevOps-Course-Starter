@@ -1,7 +1,6 @@
 import trello as trello
 from datetime import datetime
 
-
 toDoListId = trello.get_trello_list_id("To Do")
 doingListId = trello.get_trello_list_id("Doing")
 doneListId = trello.get_trello_list_id("Done")
@@ -98,6 +97,7 @@ def get_card_checklist(id):
         trello.post_trello("cards/" + id + "/checklists?")
         todo = trello.get_trello("cards/" + id + "/checklists?")
         return todo[0]["checkItems"]
+
 
 def get_complete_items_from_today(cards):
     returnList = []

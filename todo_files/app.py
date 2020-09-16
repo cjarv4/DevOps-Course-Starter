@@ -21,8 +21,6 @@ def flip_show_all_done():
     return redirect("/")
 
 
-# need a new method to show all in done column (flip boolean?)
-
 @app.route('/card/createNew', methods=['POST'])
 def create_new_card():
     card.add_card(request.form['item_title'], request.form['desc'], request.form['date'])
