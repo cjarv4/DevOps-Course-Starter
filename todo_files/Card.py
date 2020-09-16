@@ -102,6 +102,6 @@ def get_card_checklist(id):
 def get_complete_items_from_today(cards):
     returnList = []
     for card in cards:
-        if card.last_activity[0:10] == datetime.today().strftime('%Y-%m-%d'):
+        if card.last_activity == datetime.today().strftime('%Y-%m-%d'):
             returnList.append(card)
     return returnList
