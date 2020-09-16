@@ -1,8 +1,11 @@
+import Card as card
+
 class ViewModel:
-    def __init__(self, todo, doing, done):
+    def __init__(self, todo, doing, done, show_all):
         self._todo = todo
         self._doing = doing
         self._done = done
+        self._show_all = show_all
 
     @property
     def todo(self):
@@ -14,4 +17,7 @@ class ViewModel:
 
     @property
     def done(self):
-        return self._done
+        if len(self._done)<5 or self._show_all:
+            return self._done
+        else:
+            return card.get_complete_items_from_today(self._done)

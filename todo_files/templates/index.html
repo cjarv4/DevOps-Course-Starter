@@ -35,9 +35,11 @@
 <div class="column">
     <div class="col-md-12">
         <h2>Completed</h2>
+        <a href="/showAll">-- toggle today only or all --</a>
         <ul class="list-group mb-4">
             {% for item in view_model.done %}
-            {{item.name}}
+            {{item.name}} <br>
+            Completed on: {{item.last_activity}}
             <a href="/card/{{ item.id }}">View Details</a>
             <a href="/card/{{ item.id }}/moveToDoing">Make Incomplete</a>
             <br>

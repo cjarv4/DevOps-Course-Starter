@@ -36,22 +36,25 @@ def convertToArrayOfCards(items):
 
 
 def convertToCard(item):
-    return Card(item["id"], item["name"], item["desc"], item["due"], item["dateLastActivity"])
+    new_card = Card(item["id"], item["name"], item["desc"], item["due"], item["dateLastActivity"])
+    return trim_timestamp(new_card)
 
 
 def get_card_by_id(id):
     card = next((card for card in get_all_cards() if card.id == id), None)
-    return trim_timestamp(card)
+    return card
 
 
 def get_card_by_name(name):
     card = next((card for card in get_all_cards() if card.name == name), None)
-    return trim_timestamp(card)
+    return card
 
 
 def trim_timestamp(card):
     if card.due:
         card.due = card.due[0:10]  # ignore timestamp
+    if card.last_activity:
+        card.last_activity = card.last_activity[0:10]  # ignore timestamp
     return card
 
 
@@ -93,3 +96,10 @@ def get_card_checklist(id):
         trello.post_trello("cards/" + id + "/checklists?")
         todo = trello.get_trello("cards/" + id + "/checklists?")
         return todo[0]["checkItems"]
+
+def get_complete_items_from_today(cards):
+    returnList = []
+    for card in cards:
+        if card.last_activity[0:10] == "2020-08-18":
+            returnList.append(card)
+    return returnList

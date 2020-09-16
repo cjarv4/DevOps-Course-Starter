@@ -5,15 +5,25 @@ import View_Model as view_model
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
+show_all_done = False
 
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     todo, doing, done = card.get_cards()
-    item_view_model = view_model.ViewModel(todo, doing, done)
+    print(show_all_done)
+    item_view_model = view_model.ViewModel(todo, doing, done, show_all_done)
     return render_template('index.html', view_model=item_view_model)
-    # return render_template('index.html', todos=todo, doings=doing, dones=done)
 
+
+@app.route('/showAll', methods=['GET'])
+def index_all():
+    global show_all_done
+    show_all_done = not show_all_done
+    return index()
+
+
+# need a new method to show all in done column (flip boolean?)
 
 @app.route('/card/createNew', methods=['POST'])
 def create_new_card():
