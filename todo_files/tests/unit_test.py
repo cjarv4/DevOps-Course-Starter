@@ -1,6 +1,10 @@
 import pytest
 import trello as trello
 import Card as card
+import View_Model as view_model
+import app
+
+from datetime import datetime
 
 # Get a stub card
 
@@ -21,6 +25,17 @@ def test_get_individual_lists():
     assert isinstance(doing, list)
     assert isinstance(done, list)
 
+def test_create_and_clear_down_card():
+    test_card_name = "test_create_then_clear_down"
+    try:
+        create_test_card(test_card_name)
+        test_card = card.get_card_by_name(test_card_name)
+        assert test_card.name==test_card_name
+    finally:
+        cleanup_test_card(test_card_name)
+        test_card = card.get_card_by_name(test_card_name)
+        assert test_card == None
+
 def test_get_card_last_modified_date():
     test_card_name = "test_get_card_last_modified_date"
     try:
@@ -29,4 +44,27 @@ def test_get_card_last_modified_date():
         assert test_card.last_activity
     finally:
         cleanup_test_card(test_card_name)
-        
+
+def test_return_all_done():
+    todo, doing, done = card.get_cards()
+
+    item_view_model = view_model.ViewModel(todo, doing, done, True)
+    assert len(done)==len(item_view_model.done)
+
+def test_return_todays_done():
+    test_card_name="test_done_returns_today_only"
+    try:
+        create_test_card(test_card_name)
+        test_card = card.get_card_by_name(test_card_name)
+        card.set_card_to_complete(test_card.id)
+
+        todo, doing, done = card.get_cards()
+        item_view_model = view_model.ViewModel(todo, doing, done, False)
+        assert len(item_view_model.done)>=1 and len(item_view_model.done)<=len(done)
+    finally:
+        cleanup_test_card(test_card_name)
+
+def test_flip_global_show_all_done():
+    old_show_all = app.show_all_done
+    app.flip_show_all_done()
+    assert old_show_all!=app.show_all_done
