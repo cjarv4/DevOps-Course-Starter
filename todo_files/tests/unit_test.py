@@ -29,7 +29,4 @@ def test_get_card_last_modified_date():
         assert test_card.last_activity
     finally:
         cleanup_test_card(test_card_name)
-
-def test_only_show_five_done():
-    _, _, done =  card.get_cards()
-    assert len(done)<=5
+        
