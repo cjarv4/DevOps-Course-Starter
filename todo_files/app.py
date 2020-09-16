@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 import Card as card
-import pytest
 import View_Model as view_model
 
 app = Flask(__name__)
@@ -11,16 +10,15 @@ show_all_done = False
 @app.route('/', methods=['POST', 'GET'])
 def index():
     todo, doing, done = card.get_cards()
-    print(show_all_done)
     item_view_model = view_model.ViewModel(todo, doing, done, show_all_done)
     return render_template('index.html', view_model=item_view_model)
 
 
 @app.route('/showAll', methods=['GET'])
-def index_all():
+def flip_show_all_done():
     global show_all_done
     show_all_done = not show_all_done
-    return index()
+    return redirect("/")
 
 
 # need a new method to show all in done column (flip boolean?)
@@ -28,7 +26,7 @@ def index_all():
 @app.route('/card/createNew', methods=['POST'])
 def create_new_card():
     card.add_card(request.form['item_title'], request.form['desc'], request.form['date'])
-    return index()
+    return redirect("/")
 
 
 @app.route('/card/<id>/checklistItem/createNew', methods=['POST'])
