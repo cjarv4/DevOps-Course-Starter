@@ -3,6 +3,7 @@ import trello as trello
 import Card as card
 import View_Model as view_model
 import app
+import Board as board
 
 from datetime import datetime
 
@@ -14,6 +15,13 @@ def create_test_card(title):
 def cleanup_test_card(title):
     test_card = card.get_card_by_name(title)
     card.delete_card(test_card.id)
+
+def create_test_board(name):
+    board.add_board(name)
+
+def cleanup_test_board(name):
+    test_board = board.get_board_by_name(name)
+    board.delete_board(test_board.id)
 
 def test_trello_connection():
     response = trello.get_trello_board_id()
@@ -63,4 +71,14 @@ def test_return_todays_done():
         assert len(item_view_model.done)>=1 and len(item_view_model.done)<=len(done)
     finally:
         cleanup_test_card(test_card_name)
-    
+
+def test_create_and_clear_down_board():
+    test_board_name = "test_create_then_clear_down"
+    try:
+        create_test_board(test_board_name)
+        test_board = board.get_board_by_name(test_board_name)
+        assert test_board.name==test_board_name
+    finally:
+        cleanup_test_board(test_board_name)
+        test_board = board.get_board_by_name(test_board_name)
+        assert test_board == None
