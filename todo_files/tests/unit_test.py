@@ -19,7 +19,7 @@ def test_trello_connection():
     response = trello.get_trello_board_id()
     assert response=='5f3169dff2ad7b72d45fc4c3'
 
-def test_get_individual_lists():
+def test_get_individual_lists_and_convert_to_objects():
     todo, doing, done = card.get_cards()
     assert isinstance(todo, list)
     assert isinstance(doing, list)
@@ -63,8 +63,4 @@ def test_return_todays_done():
         assert len(item_view_model.done)>=1 and len(item_view_model.done)<=len(done)
     finally:
         cleanup_test_card(test_card_name)
-
-def test_flip_global_show_all_done():
-    old_show_all = app.show_all_done
-    app.flip_show_all_done()
-    assert old_show_all!=app.show_all_done
+    
