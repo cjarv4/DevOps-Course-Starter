@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
 import Card as card
 import View_Model as view_model
+show_all_done = False
+
 
 def create_app():
-    show_all_done = False
-
     app = Flask(__name__)
     app.config.from_object('flask_config.Config')
 
@@ -16,8 +16,9 @@ def create_app():
 
     @app.route('/showAll', methods=['GET'])
     def flip_show_all_done():
-        # show_all_done
+        global show_all_done
         show_all_done = not show_all_done
+        print(show_all_done)
         return redirect("/")
 
     @app.route('/card/createNew', methods=['POST'])
