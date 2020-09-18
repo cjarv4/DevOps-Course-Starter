@@ -8,6 +8,7 @@ class Board:
 
 def add_board(name):
     trello.post_trello("boards?name="+name)
+    return get_board_by_name(name)
 
 def delete_board(id):
     trello.delete_trello("boards/" + id + "?")
