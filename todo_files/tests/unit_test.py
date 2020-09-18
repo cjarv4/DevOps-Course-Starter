@@ -16,9 +16,6 @@ def cleanup_test_card(title):
     test_card = card.get_card_by_name(title)
     card.delete_card(test_card.id)
 
-def create_test_board(name):
-    board.add_board(name)
-
 def cleanup_test_board(name):
     test_board = board.get_board_by_name(name)
     board.delete_board(test_board.id)
@@ -75,7 +72,7 @@ def test_return_todays_done():
 def test_create_and_clear_down_board():
     test_board_name = "test_create_then_clear_down"
     try:
-        create_test_board(test_board_name)
+        board.add_board(test_board_name)
         test_board = board.get_board_by_name(test_board_name)
         assert test_board.name==test_board_name
     finally:
