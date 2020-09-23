@@ -30,7 +30,7 @@ def driver():
     with webdriver.Firefox(executable_path=r'/Users/cjarv4/Downloads/geckodriver') as driver:
         yield driver
 
-def test_task_journey(driver, test_app): 
+def test_open_app(driver, test_app): 
     # os.environ["PATH"] += os.pathsep + '/Users/cjarv4/Downloads/'
     
     driver.get('http://localhost:5000/')
