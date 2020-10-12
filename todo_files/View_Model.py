@@ -1,5 +1,4 @@
-import Card as card
-
+import card
 
 class ViewModel:
     def __init__(self, todo, doing, done, show_all):
