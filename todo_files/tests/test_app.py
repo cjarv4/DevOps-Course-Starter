@@ -26,12 +26,10 @@ def test_app():
 
 @pytest.fixture(scope="module")
 def driver():
-    # browser = webdriver.Firefox(executable_path=r'geckodriver')
-    with webdriver.Firefox(executable_path=r'/Users/cjarv4/Downloads/geckodriver') as driver:
+    with webdriver.Firefox() as driver:
         yield driver
 
 def test_open_app(driver, test_app): 
-    # os.environ["PATH"] += os.pathsep + '/Users/cjarv4/Downloads/'
     
     driver.get('http://localhost:5000/')
     assert driver.title == 'To-Do App'
