@@ -39,6 +39,13 @@ Once the all dependencies have been installed, start the Flask app in developmen
 $ poetry run flask run
 ```
 
+OR
+
+The app can be run using Vagrant 
+```bash
+$ vagrant up
+```
+
 You should see output similar to the following:
 ```bash
  * Serving Flask app "app" (lazy loading)
