@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
-import Card as card
-import View_Model as view_model
+import card
+import view_model
 show_all_done = False
 
 

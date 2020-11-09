@@ -1,7 +1,7 @@
 import os
 from threading import Thread
 import pytest
-import Board as board
+import board
 import app
 from selenium import webdriver
 

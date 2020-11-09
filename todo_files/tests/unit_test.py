@@ -1,9 +1,9 @@
 import pytest
-import trello as trello
-import Card as card
-import View_Model as view_model
+import trello
+import card
+import view_model
 import app
-import Board as board
+import board
 
 from datetime import datetime
 
