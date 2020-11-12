@@ -3,6 +3,7 @@ FROM python:3.8-slim-buster
 # Set working directory
 WORKDIR /app
 
+# Set environment values
 ENV PATH="${PATH}:/root/.poetry/bin"
 
 #Install Curl
@@ -17,6 +18,7 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 COPY . /app
 RUN chmod 755 /app/entrypoint.sh
 
+# Install poetry files
 RUN poetry install
 
 # run entrypoint
