@@ -46,6 +46,14 @@ The app can be run using Vagrant
 $ vagrant up
 ```
 
+OR
+
+The app can be run using Docker 
+```bash
+$ docker build --tag todo-app .
+$ docker run -it --rm --name=todo -p 80:5000 -d todo-app
+```
+
 You should see output similar to the following:
 ```bash
  * Serving Flask app "app" (lazy loading)
