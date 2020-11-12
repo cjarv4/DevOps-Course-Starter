@@ -17,5 +17,7 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 COPY . /app
 RUN chmod 755 /app/entrypoint.sh
 
+RUN poetry install
+
 # run entrypoint
 CMD /app/entrypoint.sh

@@ -1,3 +1,3 @@
 #!/bin/bash
-poetry --version
-echo "im working"
+cd todo_files
+poetry run flask run --host 0.0.0.0
