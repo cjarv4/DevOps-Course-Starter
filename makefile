@@ -6,6 +6,7 @@ dev_server: ## build the container
 	docker run -it --rm --name=todo -p 80:5000  \
 	--env-file todo_files/.env \
 	--env FLASK_ENV=development \
+	-v "`pwd`/todo_files:/app/todo_files" \
 	-d todo-app:dev
 
 server: ## build the container
