@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster
+FROM python:3.8-slim-buster as base
 
 # Set working directory
 WORKDIR /app
@@ -23,3 +23,12 @@ RUN poetry install
 
 # run entrypoint
 CMD /app/entrypoint.sh
+
+
+FROM base as production
+# Configure for production
+ENV FLASK_ENV=production    
+
+FROM base as development
+# Configure for local development
+ENV FLASK_ENV=development

@@ -1,18 +1,18 @@
 build: ## build the image
-	docker build --tag todo-app .
+	docker build --target development --tag todo-app:dev .
+	docker build --target production --tag todo-app:prod .
 
 dev_server: ## build the container
 	docker run -it --rm --name=todo -p 80:5000  \
-	--env TRELLO_KEY=d3cfc4a193b13c194d0ca2484808d1f2 \
-	--env TRELLO_TOKEN=0ee7c15267a7a7fee3f90ebed124aa5e14652888ce7fc40b444ab7b9ebcbd019 \
+	--env-file todo_files/.env \
 	--env FLASK_ENV=development \
-	-d todo-app
+	-d todo-app:dev
 
 server: ## build the container
 	docker run -it --rm --name=todo -p 80:5000  \
-	--env TRELLO_KEY=d3cfc4a193b13c194d0ca2484808d1f2 \
-	--env TRELLO_TOKEN=0ee7c15267a7a7fee3f90ebed124aa5e14652888ce7fc40b444ab7b9ebcbd019 \
-	-d todo-app
+	--env-file todo_files/.env \
+	--env FLASK_ENV=production \
+	-d todo-app:prod
 
 kill: ## kill the container
 	docker kill todo
