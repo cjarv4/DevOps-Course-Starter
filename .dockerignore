@@ -11,3 +11,10 @@ makefile
 README.md
 requirements-frozen.txt
 Vagrantfile
+
+todo_files/tests
+todo_files/.env.test
+
+todo_files/.env
+todo_files/log.txt
+todo_files/__pycache__
