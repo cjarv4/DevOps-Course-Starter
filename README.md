@@ -54,6 +54,14 @@ $ docker build --tag todo-app .
 $ docker run -it --rm --name=todo -p 80:5000 -d todo-app
 ```
 
+OR
+
+The app can be run using make commands to run docker 
+```bash
+$ make build
+$ make server
+```
+
 You should see output similar to the following:
 ```bash
  * Serving Flask app "app" (lazy loading)
