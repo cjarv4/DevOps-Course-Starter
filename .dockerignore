@@ -1,0 +1,13 @@
+__pycache__
+.vagrant
+.venv
+env
+.env
+.env.template
+.gitignore
+Dockerfile
+geckodriver
+makefile
+README.md
+requirements-frozen.txt
+Vagrantfile
