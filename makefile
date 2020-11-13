@@ -9,3 +9,6 @@ kill: ## kill the container
 
 shell: ## Connect shell to a running container
 	docker exec -it todo /bin/bash
+
+logs: ## Connect shell to a running container
+	docker logs todo
