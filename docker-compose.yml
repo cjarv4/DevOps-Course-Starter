@@ -1,0 +1,15 @@
+version: "3.8"
+   
+services:
+  dev:
+    build: .
+    command: poetry run flask run --host 0.0.0.0
+    volumes:
+      - ./todo_files:/app/todo_files
+    ports:
+      - "80:5000"
+    env_file:
+      - todo_files/.env
+    environment:
+      - FLASK_ENV=development
+      
