@@ -21,25 +21,19 @@ RUN poetry install
 #Copy app code
 COPY todo_files /app
 
-# run entrypoint
-COPY entrypoint.sh /app
-RUN chmod 755 /app/entrypoint.sh
-CMD /app/entrypoint.sh
-
 EXPOSE 80
-
 
 FROM base as production
 # Configure for production
 ENV FLASK_ENV=production  
 
-# ENTRYPOINT [ "poetry", "run", "gunicorn", "app:create_app()" ]
-# CMD [ "--bind", "0.0.0.0:80" ]  
+ENTRYPOINT [ "poetry", "run", "gunicorn", "app:create_app()" ]
+CMD [ "--bind", "0.0.0.0:80" ]  
 
 
 FROM base as development
 # Configure for local development
 ENV FLASK_ENV=development
 
-# ENTRYPOINT [ "poetry", "run", "flask", "run" ]
-# CMD [ "--host", "0.0.0.0" ]  
+ENTRYPOINT [ "poetry", "run", "flask", "run" ]
+CMD [ "--host", "0.0.0.0" ]  
