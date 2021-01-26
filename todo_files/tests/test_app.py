@@ -1,8 +1,8 @@
 import os
 from threading import Thread
 import pytest
-import board
 import app
+import board
 from selenium import webdriver
 
 @pytest.fixture(scope='module')

@@ -48,5 +48,5 @@ def mock_get_cards(url):
 
 def test_flip_global_show_all_done(client):
     old_show_all = app.show_all_done
-    response = client.get('/showAll')
+    # response = client.get('/showAll')
     assert old_show_all!=app.show_all_done
