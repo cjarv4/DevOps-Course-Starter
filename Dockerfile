@@ -20,7 +20,6 @@ RUN poetry install
 
 #Copy app code
 COPY todo_files /app
-WORKDIR /app/todo_files
 
 EXPOSE 80
 
@@ -36,5 +35,6 @@ FROM base as development
 # Configure for local development
 ENV FLASK_ENV=development
 
+WORKDIR /app/todo_files
 ENTRYPOINT [ "poetry", "run", "flask", "run" ]
 CMD [ "--host", "0.0.0.0" ]  

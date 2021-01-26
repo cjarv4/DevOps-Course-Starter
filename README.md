@@ -77,7 +77,6 @@ You should see output similar to the following:
  * Debugger is active!
  * Debugger PIN: 226-556-590
 ```
-Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 Now visit [`http://localhost:80/`](http://localhost:80/) in your web browser to view the app.
 
 For me:
