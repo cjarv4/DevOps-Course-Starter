@@ -1,5 +1,9 @@
 # DevOps Apprenticeship: Project Exercise
 
+## Env
+DevOps-Course-Starter/todo_files/.env
+need to add trello key and trello token to this env file to connect to trello
+
 ## System Requirements
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):
@@ -48,18 +52,19 @@ $ vagrant up
 
 OR
 
-The app can be run using Docker 
+The app can be run using make commands to run docker 
 ```bash
-$ docker build --tag todo-app .
-$ docker run -it --rm --name=todo -p 80:5000 -d todo-app
+$ make build
+$ make dev_server
+or for prod server
+$ make server 
 ```
 
 OR
 
-The app can be run using make commands to run docker 
+The app can be run using docker-compose
 ```bash
-$ make build
-$ make server
+$ docker-compose up
 ```
 
 You should see output similar to the following:
@@ -73,6 +78,7 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+Now visit [`http://localhost:80/`](http://localhost:80/) in your web browser to view the app.
 
 For me:
 Disconnect from VPN
