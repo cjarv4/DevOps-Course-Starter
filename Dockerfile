@@ -20,6 +20,7 @@ RUN poetry install
 
 #Copy app code
 COPY todo_files /app
+WORKDIR /app/todo_files
 
 EXPOSE 80
 
@@ -28,7 +29,7 @@ FROM base as production
 ENV FLASK_ENV=production  
 
 ENTRYPOINT [ "poetry", "run", "gunicorn", "app:create_app()" ]
-CMD [ "--bind", "0.0.0.0:80" ]  
+CMD [ "--bind", "0.0.0.0:5000" ]  
 
 
 FROM base as development
