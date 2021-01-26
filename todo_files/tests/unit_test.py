@@ -1,8 +1,8 @@
 import pytest
 import trello
+import app
 import card
 import view_model
-import app
 import board
 
 from datetime import datetime
