@@ -83,4 +83,4 @@ For me:
 Disconnect from VPN
 set proxy off
 
-install from pip using --user
+install from pip using --user 
