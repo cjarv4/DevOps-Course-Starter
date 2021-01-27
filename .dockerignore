@@ -6,7 +6,6 @@ env
 .env.template
 .gitignore
 Dockerfile
-geckodriver
 makefile
 README.md
 requirements-frozen.txt
