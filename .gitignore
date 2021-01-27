@@ -117,3 +117,5 @@ env/
 .venv/
 
 todo_files/log.txt
+geckodriver.log
+chromedriver
