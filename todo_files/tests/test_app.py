@@ -26,10 +26,13 @@ def test_app():
 
 @pytest.fixture(scope="module")
 def driver():
-    with webdriver.Firefox() as driver:
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--hide-scrollbars')
+    options.add_argument('--disable-gpu')
+    options.add_argument('-headless')
+    with webdriver.Firefox(firefox_options=options) as driver:
         yield driver
 
 def test_open_app(driver, test_app): 
-    
-    driver.get('http://localhost:5000/')
+    driver.get('http://localhost/')
     assert driver.title == 'To-Do App'

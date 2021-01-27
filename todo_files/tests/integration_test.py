@@ -44,9 +44,3 @@ def mock_get_cards(url):
         response.json.return_value = sample_trello_lists_response
         return response
     return None
-
-
-def test_flip_global_show_all_done(client):
-    old_show_all = app.show_all_done
-    # response = client.get('/showAll')
-    assert old_show_all!=app.show_all_done
