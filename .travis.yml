@@ -1,9 +1,8 @@
 --- 
 before_install: 
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - "docker build --target development --tag todo-app:dev ."
   - "docker build --target test --tag todo-app:test ."
-  - docker run -it --rm --env FLASK_ENV=test --mount type=bind,source=`pwd`/todo_files,target=/app/todo_files/ todo-app:test tests/unit_test.py
+  - docker run -it --rm --env FLASK_ENV=test todo-app:test tests/unit_test.py
 language: python
 script: 
   - "echo \"yes\""
