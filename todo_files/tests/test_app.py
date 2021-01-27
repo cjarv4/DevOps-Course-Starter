@@ -34,6 +34,18 @@ def driver():
     with webdriver.Firefox(options=options) as driver:
         yield driver
 
+# @pytest.fixture(scope='module')
+# def driver():
+#     opts = webdriver.ChromeOptions()
+# #     opts.add_argument('--headless')
+# #     opts.add_argument('--no-sandbox')
+# #     opts.add_argument('--disable-dev-shm-usage')
+#     opts.add_argument('--hide-scrollbars')
+#     opts.add_argument('--disable-gpu')
+#     opts.add_argument('-headless')
+#     with webdriver.Chrome(options=opts) as driver:
+#         yield driver
+
 def test_open_app(driver, test_app): 
     driver.get('http://localhost/')
     assert driver.title == 'To-Do App'
