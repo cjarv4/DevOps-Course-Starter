@@ -30,7 +30,8 @@ def driver():
     options.add_argument('--hide-scrollbars')
     options.add_argument('--disable-gpu')
     options.add_argument('-headless')
-    with webdriver.Firefox(firefox_options=options) as driver:
+    # with webdriver.Firefox(executable_path=os.path.join(os.getcwd(), "/geckodriver") , options=options) as driver:
+    with webdriver.Firefox(options=options) as driver:
         yield driver
 
 def test_open_app(driver, test_app): 
