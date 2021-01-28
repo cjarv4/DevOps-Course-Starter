@@ -1,13 +1,15 @@
 --- 
-before_install: 
-  - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
-  - "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-  - "docker build --target test --tag todo-app:test ."
-  - "docker run -it --rm --env FLASK_ENV=test todo-app:test tests/unit_test.py"
+services: 
+  - docker
 language: python
 python: 
   - 3.7
+before_install: 
+  - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
+  - "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+  - "docker --version"
+  - "docker build --target test --tag todo-app:test ."
+
 script: 
   - "echo \"yes\""
-services: 
-  - docker
+  - "docker run -it --rm --env FLASK_ENV=test todo-app:test tests/unit_test.py"
